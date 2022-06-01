@@ -14,7 +14,8 @@ import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
 const WatchVideo = ({ id, title }) => {
-  const { videoId } = useParams();
+  const { videoUrl } = useParams();
+  console.log(videoUrl);
   return (
     <Flex mx="6" justifyContent="space-between">
       <Box ml={{ base: 0, md: 4 }} p="4">

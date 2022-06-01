@@ -19,9 +19,9 @@ export default function VideoCard(props) {
   const thumbnail = youtubeThumbnail(`${props.url}`);
   const IMAGE = `${thumbnail.medium.url}`;
 
-  // <Link to="/watchvideo/https:/www.youtube.com/watch?v=zMFb8Y2QLPc">
   return (
-    <Link to={`/watchvideo/${1}`}>
+    // <Link to="/watchvideo/https:/www.youtube.com/watch?v=zMFb8Y2QLPc">
+    <Link to={`/watchvideo/${props.id}`}>
       <Center>
         <Box
           role={'group'}
