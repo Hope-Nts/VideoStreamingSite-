@@ -1,15 +1,19 @@
 import { Grid, GridItem } from '@chakra-ui/react';
+import ReactPlayer from 'react-player';
 import React from 'react';
+import { Link, useParams } from 'react-router-dom';
 
 const WatchVideo = () => {
+  const { videoId } = useParams();
   return (
-    <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-      <GridItem w="100%" h="10" bg="blue.500" />
-      <GridItem w="100%" h="10" bg="blue.500" />
-      <GridItem w="100%" h="10" bg="blue.500" />
-      <GridItem w="100%" h="10" bg="blue.500" />
-   
-    </Grid>
+    <>
+      <ReactPlayer
+        url="https://www.youtube.com/watch?v=zMFb8Y2QLPc"
+        controls={true}
+        width={850}
+        height={600}
+      />
+    </>
   );
 };
 

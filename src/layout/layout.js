@@ -22,13 +22,14 @@ import {
   FiSettings,
   FiMenu,
 } from 'react-icons/fi';
+import { Link as ReactRouterLink } from 'react-router-dom';
 
 const LinkItems = [
-  { name: 'Home', icon: FiHome },
-  { name: 'Trending', icon: FiTrendingUp },
-  { name: 'Explore', icon: FiCompass },
-  { name: 'WatchList', icon: FiStar },
-  { name: 'Settings', icon: FiSettings },
+  { name: 'Home', icon: FiHome, url: '/' },
+  { name: 'Trending', icon: FiTrendingUp, url: '/' },
+  { name: 'Explore', icon: FiCompass, url: '/' },
+  { name: 'WatchList', icon: FiStar, url: '/watchlist' },
+  { name: 'Settings', icon: FiSettings, url: '/' },
 ];
 
 export default function Layout({ children }) {
@@ -79,7 +80,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       {LinkItems.map(link => (
-        <NavItem key={link.name} icon={link.icon}>
+        <NavItem key={link.name} icon={link.icon} url={link.url}>
           {link.name}
         </NavItem>
       ))}
@@ -87,10 +88,11 @@ const SidebarContent = ({ onClose, ...rest }) => {
   );
 };
 
-const NavItem = ({ icon, children, ...rest }) => {
+const NavItem = ({ url, icon, children, ...rest }) => {
   return (
     <Link
-      href="#"
+      as={ReactRouterLink}
+      to={`${url}`}
       style={{ textDecoration: 'none' }}
       _focus={{ boxShadow: 'none' }}
     >
