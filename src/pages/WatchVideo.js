@@ -13,7 +13,7 @@ import ReactPlayer from 'react-player';
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-const WatchVideo = () => {
+const WatchVideo = ({ id, title }) => {
   const { videoId } = useParams();
   return (
     <Flex mx="6" justifyContent="space-between">
