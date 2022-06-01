@@ -15,7 +15,6 @@ import { Link } from 'react-router-dom';
 
 export default function VideoCard(props) {
   // const { url, title, id, broadcaster } = props;
-  console.log(props);
   const thumbnail = youtubeThumbnail(`${props.url}`);
   const IMAGE = `${thumbnail.medium.url}`;
 

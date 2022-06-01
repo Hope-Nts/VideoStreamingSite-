@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   Flex,
   Box,
@@ -12,11 +13,43 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
+import { signInAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils';
+
+const defaultFormFields = {
+  email: '',
+  password: '',
+};
 
 export default function LoginCard({ changeCard }) {
   const renderSignUp = () => {
     changeCard('SIGNUP');
   };
+
+  const [formFields, setFormFields] = useState(defaultFormFields);
+  const { email, password } = formFields;
+
+  const resetFormFields = () => {
+    setFormFields(defaultFormFields);
+  };
+
+  const handleSubmit = async event => {
+    event.preventDefault();
+
+    try {
+      await signInAuthUserWithEmailAndPassword(email, password);
+      resetFormFields();
+    } catch (error) {
+      console.log('user sign in failed', error);
+      alert('Invalid Email/Password');
+    }
+  };
+
+  const handleChange = event => {
+    const { name, value } = event.target;
+
+    setFormFields({ ...formFields, [name]: value });
+  };
+
   return (
     <Flex
       minH={'100vh'}
@@ -40,11 +73,11 @@ export default function LoginCard({ changeCard }) {
           <Stack spacing={4}>
             <FormControl id="email">
               <FormLabel>Email address</FormLabel>
-              <Input type="email" />
+              <Input type="email" name="email" onChange={handleChange} />
             </FormControl>
             <FormControl id="password">
               <FormLabel>Password</FormLabel>
-              <Input type="password" />
+              <Input type="password" name="password" onChange={handleChange} />
             </FormControl>
             <Stack spacing={10}>
               <Stack
@@ -58,6 +91,7 @@ export default function LoginCard({ changeCard }) {
                 <Link color={'blue.400'}>Forgot password?</Link>
               </Stack>
               <Button
+                onClick={handleSubmit}
                 bg={'blue.400'}
                 color={'white'}
                 _hover={{

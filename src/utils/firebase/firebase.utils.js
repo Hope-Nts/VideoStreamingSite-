@@ -39,8 +39,10 @@ googleProvider.setCustomParameters({
 });
 
 export const auth = getAuth();
+
 export const signInWithGooglePopup = () =>
   signInWithPopup(auth, googleProvider);
+
 export const signInWithGoogleRedirect = () =>
   signInWithRedirect(auth, googleProvider);
 
@@ -77,6 +79,21 @@ export const getCategoriesAndDocuments = async () => {
   return categoryMap;
 };
 
+export const getUserAccount = async userId => {
+  let data = {};
+  try {
+    const querySnapshot = await getDocs(collection(db, 'users'));
+    querySnapshot.forEach(doc => {
+      if (userId === doc.id) {
+        data = doc.data();
+      }
+    });
+  } catch (e) {
+    console.error('Error getting documents: ', e);
+  }
+  return data;
+};
+
 export const createUserDocumentFromAuth = async (
   userAuth,
   additionalInformation = {}
@@ -88,16 +105,27 @@ export const createUserDocumentFromAuth = async (
   const userSnapshot = await getDoc(userDocRef);
 
   if (!userSnapshot.exists()) {
-    const { displayName, email } = userAuth;
+    const { email } = userAuth;
     const createdAt = new Date();
 
     try {
-      await setDoc(userDocRef, {
-        displayName,
-        email,
-        createdAt,
-        ...additionalInformation,
-      });
+      if (additionalInformation.userType === 'Broadcaster') {
+        await setDoc(userDocRef, {
+          email,
+          createdAt,
+          blocked: false,
+          verified: false,
+          ...additionalInformation,
+        });
+      } else {
+        await setDoc(userDocRef, {
+          email,
+          createdAt,
+          blocked: false,
+          verified: false,
+          ...additionalInformation,
+        });
+      }
     } catch (error) {
       console.log('error creating the user', error.message);
     }

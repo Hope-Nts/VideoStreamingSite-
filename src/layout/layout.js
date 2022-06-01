@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import { signOutUser, getUserAccount } from '../utils/firebase/firebase.utils';
 import {
   IconButton,
   Box,
@@ -21,19 +22,22 @@ import {
   FiStar,
   FiSettings,
   FiMenu,
+  FiLogOut,
 } from 'react-icons/fi';
 import { Link as ReactRouterLink } from 'react-router-dom';
+import { UserContext } from '../contexts/user.context';
 
 const LinkItems = [
   { name: 'Home', icon: FiHome, url: '/' },
   { name: 'Trending', icon: FiTrendingUp, url: '/' },
   { name: 'Explore', icon: FiCompass, url: '/' },
   { name: 'WatchList', icon: FiStar, url: '/watchlist' },
-  { name: 'Settings', icon: FiSettings, url: '/' },
+  { name: 'Sign Out', icon: FiLogOut, url: '/' },
 ];
 
 export default function Layout({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Box minH="100vh" bg={useColorModeValue('gray.100', 'gray.900')}>
       <SidebarContent
@@ -63,6 +67,18 @@ export default function Layout({ children }) {
 }
 
 const SidebarContent = ({ onClose, ...rest }) => {
+  const [details, setDetails] = useState(null);
+  const { currentUser } = useContext(UserContext);
+  if (currentUser) {
+    (async () => {
+      try {
+        const userDetails = await getUserAccount(currentUser.uid);
+        setDetails(userDetails);
+      } catch (e) {
+        console.log(e);
+      }
+    })();
+  }
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -79,11 +95,26 @@ const SidebarContent = ({ onClose, ...rest }) => {
         </Text>
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
-      {LinkItems.map(link => (
-        <NavItem key={link.name} icon={link.icon} url={link.url}>
-          {link.name}
+      <NavItem key={'Home'} icon={FiHome} url={'/'}>
+        Home
+      </NavItem>
+      {details.userType === 'BroadCaster' ? (
+        <NavItem key={'Trending'} icon={FiTrendingUp} url={'/'}>
+          Trending
         </NavItem>
-      ))}
+      ) : null}
+      {details.userType === 'Admin' ? (
+        <NavItem key={'Explore'} icon={FiCompass} url={'/'}>
+          Explore
+        </NavItem>
+      ) : null}
+      <NavItem key={'WatchList'} icon={FiStar} url={'/'}>
+        WatchList
+      </NavItem>
+
+      <NavItem onClick={signOutUser} key={'Sign Out'} icon={FiStar} url={'/'}>
+        Sign Out
+      </NavItem>
     </Box>
   );
 };
