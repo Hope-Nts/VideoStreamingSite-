@@ -18,7 +18,7 @@ import {
 import {
   FiHome,
   FiTrendingUp,
-  FiCompass,
+  FiVideo,
   FiStar,
   FiUsers,
   FiMenu,
@@ -91,8 +91,8 @@ const SidebarContent = ({ onClose, ...rest }) => {
       <NavItem key={'Home'} icon={FiHome} url={'/'}>
         Home
       </NavItem>
-      {details.userType === 'BroadCaster' ? (
-        <NavItem key={'Trending'} icon={FiTrendingUp} url={'/'}>
+      {details.userType === 'Broadcaster' ? (
+        <NavItem key={'Trending'} icon={FiVideo} url={'/videos'}>
           Videos
         </NavItem>
       ) : null}

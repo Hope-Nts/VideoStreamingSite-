@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import MUIDataTable from 'mui-datatables';
 import { Stack, Input, Button, useColorModeValue } from '@chakra-ui/react';
+import {
+  blockUser,
+  unBlockUser,
+  verifyUser,
+} from '../../utils/firebase/firebase.utils';
 // const DateOfCreation = (props) => {
 //   const date = props.date ? new Date(`${props.date}`) : "";
 //   return <div>{date.toDateString()} </div>;
@@ -59,15 +64,15 @@ export default function TicketTable(props) {
       },
     },
     {
-      name: '',
+      name: 'blocked',
+      label: 'Access',
       options: {
         filter: false,
         sort: false,
         empty: true,
         customBodyRender: (value, tableMeta) => {
-          const [id] = tableMeta.rowData;
-
-          return (
+          const id = tableMeta.rowData[0];
+          return value === false ? (
             <Button
               bg={'blue.400'}
               rounded={'full'}
@@ -75,23 +80,36 @@ export default function TicketTable(props) {
               flex={'1 0 auto'}
               _hover={{ bg: 'blue.500' }}
               _focus={{ bg: 'blue.500' }}
+              onClick={() => blockUser(id)}
             >
               Block
+            </Button>
+          ) : (
+            <Button
+              bg={'blue.400'}
+              rounded={'full'}
+              color={'white'}
+              flex={'1 0 auto'}
+              _hover={{ bg: 'blue.500' }}
+              _focus={{ bg: 'blue.500' }}
+              onClick={() => unBlockUser(id)}
+            >
+              Unblock
             </Button>
           );
         },
       },
     },
     {
-      name: '',
+      name: 'verified',
+      label: 'Verify?',
       options: {
         filter: false,
         sort: false,
         empty: true,
         customBodyRender: (value, tableMeta) => {
-          const [verified] = tableMeta.rowData;
-          console.log(verified);
-          return verified === false ? (
+          const id = tableMeta.rowData[0];
+          return value === false ? (
             <Button
               bg={'blue.400'}
               rounded={'full'}
@@ -99,6 +117,7 @@ export default function TicketTable(props) {
               flex={'1 0 auto'}
               _hover={{ bg: 'blue.500' }}
               _focus={{ bg: 'blue.500' }}
+              onClick={() => verifyUser(id)}
             >
               Verify
             </Button>

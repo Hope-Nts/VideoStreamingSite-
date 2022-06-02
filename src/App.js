@@ -9,6 +9,7 @@ import WatchList from './pages/WatchList';
 import Users from './pages/Users';
 import { UserContext } from './contexts/user.context';
 import Layout from './layout/layout';
+import Videos from './pages/Videos';
 let loggedIn = true;
 function App() {
   // const user = null;
@@ -27,7 +28,7 @@ function App() {
 
         if (
           userDetails.userType === 'Broadcaster' &&
-          !userDetails.verfied &&
+          userDetails.verfied &&
           loggedIn
         ) {
           loggedIn = false;
@@ -49,7 +50,7 @@ function App() {
             <Route path="/watchvideo/:id" element={<WatchVideo />} />
             <Route path="/watchlist" element={<WatchList />} />
             <Route path="/users" element={<Users />} />
-            {/* <Route path='auth' element={<Authentication />} /> */}
+            <Route path="/videos" element={<Videos />} />
             {/* <Route path='checkout' element={<Checkout />} /> */}
           </Routes>
         </Layout>

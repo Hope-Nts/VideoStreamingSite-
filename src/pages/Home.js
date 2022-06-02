@@ -11,7 +11,9 @@ const Home = () => {
   useEffect(() => {
     setVideos(categoriesMap);
   }, [categoriesMap]);
-  console.log(videos);
+  if (videos.length > 0) {
+    console.log(videos);
+  }
 
   return (
     <>

@@ -14,10 +14,13 @@ import {
   doc,
   getDoc,
   setDoc,
+  deleteDoc,
+  updateDoc,
   collection,
   writeBatch,
   query,
   getDocs,
+  arrayUnion,
 } from 'firebase/firestore';
 
 const firebaseConfig = {
@@ -158,3 +161,51 @@ export const signOutUser = async () => await signOut(auth);
 
 export const onAuthStateChangedListener = callback =>
   onAuthStateChanged(auth, callback);
+
+export const blockUser = async id => {
+  const userRef = doc(db, 'users', `${id}`);
+
+  // Set the "capital" field of the city 'DC'
+  await updateDoc(userRef, {
+    blocked: true,
+  });
+};
+export const unBlockUser = async id => {
+  const userRef = doc(db, 'users', `${id}`);
+
+  // Set the "capital" field of the city 'DC'
+  await updateDoc(userRef, {
+    blocked: false,
+  });
+};
+
+export const verifyUser = async id => {
+  const userRef = doc(db, 'users', `${id}`);
+
+  // Set the "capital" field of the city 'DC'
+  await updateDoc(userRef, {
+    verified: true,
+  });
+};
+
+// export const deleteUser = async id => {
+//   const userRef = doc(db, 'users', `${id}`);
+
+//   // Set the "capital" field of the city 'DC'
+//   await deleteDoc(userRef, {
+//     verified: true,
+//   });
+// };
+
+export const addVideo = async (sportingCode, videoDetails) => {
+  const videosRef = doc(db, 'categories', `${sportingCode}`);
+  await updateDoc(videosRef, {
+    videos: arrayUnion({
+      id: 20,
+      title: `Men's 10000m final`,
+      url: 'https://youtu.be/UiSB2Fbw9gs',
+      broadcaster: 'SuperSport',
+      comments: ['Hello World ', 'These athletes are talented'],
+    }),
+  });
+};
