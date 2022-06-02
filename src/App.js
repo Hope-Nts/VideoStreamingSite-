@@ -6,6 +6,7 @@ import AuthPage from './pages/Authentication';
 import Home from './pages/Home';
 import WatchVideo from './pages/WatchVideo';
 import WatchList from './pages/WatchList';
+import Users from './pages/Users';
 import { UserContext } from './contexts/user.context';
 import Layout from './layout/layout';
 let loggedIn = true;
@@ -47,7 +48,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/watchvideo/:id" element={<WatchVideo />} />
             <Route path="/watchlist" element={<WatchList />} />
-            {/* <Route path='shop/*' element={<Shop />} /> */}
+            <Route path="/users" element={<Users />} />
             {/* <Route path='auth' element={<Authentication />} /> */}
             {/* <Route path='checkout' element={<Checkout />} /> */}
           </Routes>

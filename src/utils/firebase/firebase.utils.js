@@ -64,6 +64,17 @@ export const addCollectionAndDocuments = async (
   console.log('done');
 };
 
+export const getUsers = async () => {
+  const collectionRef = collection(db, 'users');
+  const q = query(collectionRef);
+  const querySnapshot = await getDocs(q);
+  const data = ([] = querySnapshot.docs.map(docSnapshot => {
+    return { id: docSnapshot.id, ...docSnapshot.data() };
+  }));
+
+  return data;
+};
+
 export const getCategoriesAndDocuments = async () => {
   const collectionRef = collection(db, 'categories');
   const q = query(collectionRef);
@@ -71,12 +82,6 @@ export const getCategoriesAndDocuments = async () => {
   const data = ([] = querySnapshot.docs.map(docSnapshot => {
     return docSnapshot.data();
   }));
-  console.log(data);
-  // const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-  //   const { sportingCode, videos } = docSnapshot.data();
-  //   acc[sportingCode.toLowerCase()] = docSnapshot.data();
-  //   return acc;
-  // }, {});
 
   return data;
 };
@@ -117,6 +122,7 @@ export const createUserDocumentFromAuth = async (
           createdAt,
           blocked: false,
           verified: false,
+          userType: 'Broadcaster',
           ...additionalInformation,
         });
       } else {
@@ -124,7 +130,7 @@ export const createUserDocumentFromAuth = async (
           email,
           createdAt,
           blocked: false,
-          verified: false,
+          userType: 'Spectator',
           ...additionalInformation,
         });
       }

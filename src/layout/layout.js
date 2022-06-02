@@ -20,20 +20,12 @@ import {
   FiTrendingUp,
   FiCompass,
   FiStar,
-  FiSettings,
+  FiUsers,
   FiMenu,
   FiLogOut,
 } from 'react-icons/fi';
 import { Link as ReactRouterLink } from 'react-router-dom';
 import { UserContext } from '../contexts/user.context';
-
-const LinkItems = [
-  { name: 'Home', icon: FiHome, url: '/' },
-  { name: 'Trending', icon: FiTrendingUp, url: '/' },
-  { name: 'Explore', icon: FiCompass, url: '/' },
-  { name: 'WatchList', icon: FiStar, url: '/watchlist' },
-  { name: 'Sign Out', icon: FiLogOut, url: '/' },
-];
 
 export default function Layout({ children }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -101,19 +93,19 @@ const SidebarContent = ({ onClose, ...rest }) => {
       </NavItem>
       {details.userType === 'BroadCaster' ? (
         <NavItem key={'Trending'} icon={FiTrendingUp} url={'/'}>
-          Trending
+          Videos
         </NavItem>
       ) : null}
       {details.userType === 'Admin' ? (
-        <NavItem key={'Explore'} icon={FiCompass} url={'/'}>
-          Explore
+        <NavItem key={'Explore'} icon={FiUsers} url={'/users'}>
+          Users
         </NavItem>
       ) : null}
       <NavItem key={'WatchList'} icon={FiStar} url={'/watchlist'}>
         WatchList
       </NavItem>
 
-      <NavItem onClick={signOutUser} key={'Sign Out'} icon={FiStar} url={'/'}>
+      <NavItem onClick={signOutUser} key={'Sign Out'} icon={FiLogOut} url={'/'}>
         Sign Out
       </NavItem>
     </Box>

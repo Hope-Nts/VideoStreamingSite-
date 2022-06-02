@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import VideoCard from '../components/videoCard/videoCard.component';
+
 import VideoGrid from '../components/videogrid/videogrid.component';
 import { CategoriesContext } from '../contexts/categories.context';
 
