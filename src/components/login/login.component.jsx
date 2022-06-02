@@ -7,12 +7,14 @@ import {
   Input,
   Checkbox,
   Stack,
+  Image,
   Link,
   Button,
   Heading,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
+import Logo from '../../Logo.png';
 import { signInAuthUserWithEmailAndPassword } from '../../utils/firebase/firebase.utils';
 
 const defaultFormFields = {
@@ -57,12 +59,10 @@ export default function LoginCard({ changeCard }) {
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Stack spacing={2} mx={'auto'} maxW={'lg'} py={2} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'}>Sign in to your account</Heading>
-          <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool <Link color={'blue.400'}>features</Link> ✌️
-          </Text>
+          <Image src={Logo} alt="LOGO" boxSize="100px" />
+          <Heading fontSize={'2xl'}>Sign in to your account</Heading>
         </Stack>
         <Box
           rounded={'lg'}

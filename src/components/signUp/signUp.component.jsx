@@ -5,7 +5,7 @@ import {
   FormLabel,
   Input,
   InputGroup,
-  HStack,
+  Image,
   InputRightElement,
   Stack,
   Button,
@@ -18,6 +18,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
+import Logo from '../../Logo.png';
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
@@ -84,14 +85,10 @@ export default function SignUpCard({ changeCard }) {
       justify={'center'}
       bg={useColorModeValue('gray.50', 'gray.800')}
     >
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Stack spacing={2} mx={'auto'} maxW={'lg'} py={2} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'} textAlign={'center'}>
-            Sign up
-          </Heading>
-          <Text fontSize={'lg'} color={'gray.600'}>
-            to enjoy all of our cool features ✌️
-          </Text>
+          <Image src={Logo} alt="LOGO" boxSize="100px" />
+          <Heading fontSize={'2xl'}>Sign up for an account</Heading>
         </Stack>
         <Box
           rounded={'lg'}
