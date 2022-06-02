@@ -200,12 +200,6 @@ export const verifyUser = async id => {
 export const addVideo = async (sportingCode, videoDetails) => {
   const videosRef = doc(db, 'categories', `${sportingCode}`);
   await updateDoc(videosRef, {
-    videos: arrayUnion({
-      id: 20,
-      title: `Men's 10000m final`,
-      url: 'https://youtu.be/UiSB2Fbw9gs',
-      broadcaster: 'SuperSport',
-      comments: ['Hello World ', 'These athletes are talented'],
-    }),
+    videos: arrayUnion(videoDetails),
   });
 };

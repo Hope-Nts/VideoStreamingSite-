@@ -12,9 +12,10 @@ import {
   DrawerContent,
   Text,
   useDisclosure,
-  BoxProps,
+  Image,
   FlexProps,
 } from '@chakra-ui/react';
+
 import {
   FiHome,
   FiTrendingUp,
@@ -25,6 +26,7 @@ import {
   FiLogOut,
 } from 'react-icons/fi';
 import { Link as ReactRouterLink } from 'react-router-dom';
+import Logo from './Logo.png';
 import { UserContext } from '../contexts/user.context';
 
 export default function Layout({ children }) {
@@ -83,9 +85,8 @@ const SidebarContent = ({ onClose, ...rest }) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="space-between">
-        <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold">
-          Logo
-        </Text>
+        <Image src={Logo} alt="LOGO" boxSize="100px" />
+
         <CloseButton display={{ base: 'flex', md: 'none' }} onClick={onClose} />
       </Flex>
       <NavItem key={'Home'} icon={FiHome} url={'/'}>
