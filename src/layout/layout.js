@@ -67,7 +67,7 @@ export default function Layout({ children }) {
 }
 
 const SidebarContent = ({ onClose, ...rest }) => {
-  const [details, setDetails] = useState(null);
+  const [details, setDetails] = useState({ userType: '' });
   const { currentUser } = useContext(UserContext);
   if (currentUser) {
     (async () => {
@@ -79,6 +79,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
       }
     })();
   }
+
   return (
     <Box
       bg={useColorModeValue('white', 'gray.900')}
@@ -108,7 +109,7 @@ const SidebarContent = ({ onClose, ...rest }) => {
           Explore
         </NavItem>
       ) : null}
-      <NavItem key={'WatchList'} icon={FiStar} url={'/'}>
+      <NavItem key={'WatchList'} icon={FiStar} url={'/watchlist'}>
         WatchList
       </NavItem>
 

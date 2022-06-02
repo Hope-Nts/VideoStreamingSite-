@@ -1,14 +1,27 @@
-import { Grid, GridItem } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import VideoCard from '../components/videoCard/videoCard.component';
+import VideoGrid from '../components/videogrid/videogrid.component';
+import { CategoriesContext } from '../contexts/categories.context';
 
 const WatchList = () => {
+  const { categoriesMap } = useContext(CategoriesContext);
+
+  const [videos, setVideos] = useState(categoriesMap);
+  useEffect(() => {
+    setVideos(categoriesMap);
+  }, [categoriesMap]);
+  console.log(videos);
+
   return (
-    <Grid templateColumns="repeat(5, 1fr)" gap={6}>
-      <GridItem w="100%" h="10" bg="blue.500" />
-      <GridItem w="100%" h="10" bg="blue.500" />
-      <GridItem w="100%" h="10" bg="blue.500" />
-    </Grid>
+    <>
+      {videos.length > 0
+        ? videos.map((data, idx) => {
+            if (idx < 1) {
+              return <VideoGrid broadcastData={data} />;
+            }
+          })
+        : null}
+    </>
   );
 };
-
 export default WatchList;

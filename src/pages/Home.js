@@ -1,14 +1,25 @@
-import { Grid, Heading } from '@chakra-ui/react';
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import VideoCard from '../components/videoCard/videoCard.component';
 import VideoGrid from '../components/videogrid/videogrid.component';
+import { CategoriesContext } from '../contexts/categories.context';
+
 import { SPORT_DATA } from '../shop-data';
 const Home = () => {
+  const { categoriesMap } = useContext(CategoriesContext);
+
+  const [videos, setVideos] = useState(categoriesMap);
+  useEffect(() => {
+    setVideos(categoriesMap);
+  }, [categoriesMap]);
+  console.log(videos);
+
   return (
     <>
-      {SPORT_DATA.map(data => {
-        return <VideoGrid broadcastData={data} />;
-      })}
+      {videos.length > 0
+        ? videos.map(data => {
+            return <VideoGrid broadcastData={data} />;
+          })
+        : null}
     </>
   );
 };

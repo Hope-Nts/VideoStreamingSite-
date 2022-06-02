@@ -50,14 +50,13 @@ export const db = getFirestore();
 
 export const addCollectionAndDocuments = async (
   collectionKey,
-  objectsToAdd,
-  field
+  objectsToAdd
 ) => {
   const collectionRef = collection(db, collectionKey);
   const batch = writeBatch(db);
 
   objectsToAdd.forEach(object => {
-    const docRef = doc(collectionRef, object.title.toLowerCase());
+    const docRef = doc(collectionRef, object.sportingCode.toLowerCase());
     batch.set(docRef, object);
   });
 
@@ -68,15 +67,18 @@ export const addCollectionAndDocuments = async (
 export const getCategoriesAndDocuments = async () => {
   const collectionRef = collection(db, 'categories');
   const q = query(collectionRef);
-
   const querySnapshot = await getDocs(q);
-  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
-    const { title, items } = docSnapshot.data();
-    acc[title.toLowerCase()] = items;
-    return acc;
-  }, {});
+  const data = ([] = querySnapshot.docs.map(docSnapshot => {
+    return docSnapshot.data();
+  }));
+  console.log(data);
+  // const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+  //   const { sportingCode, videos } = docSnapshot.data();
+  //   acc[sportingCode.toLowerCase()] = docSnapshot.data();
+  //   return acc;
+  // }, {});
 
-  return categoryMap;
+  return data;
 };
 
 export const getUserAccount = async userId => {

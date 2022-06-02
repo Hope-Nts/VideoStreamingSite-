@@ -1,18 +1,25 @@
 import { createContext, useState, useEffect } from 'react';
+import { SPORT_DATA } from '../shop-data';
 
-import { getCategoriesAndDocuments } from '../utils/firebase/firebase.utils';
+import {
+  getCategoriesAndDocuments,
+  addCollectionAndDocuments,
+} from '../utils/firebase/firebase.utils';
 
 export const CategoriesContext = createContext({
-  categoriesMap: {},
+  categoriesMap: [],
 });
 
 export const CategoriesProvider = ({ children }) => {
   const [categoriesMap, setCategoriesMap] = useState({});
+  // useEffect(() => {
+  //   addCollectionAndDocuments('categories', SPORT_DATA);
+  // }, []);
 
   useEffect(() => {
     const getCategoriesMap = async () => {
       const categoryMap = await getCategoriesAndDocuments();
-      console.log(categoryMap);
+      // console.log(categoryMap);
       setCategoriesMap(categoryMap);
     };
 

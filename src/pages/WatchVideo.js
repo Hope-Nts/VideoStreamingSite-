@@ -1,26 +1,40 @@
-import { Grid, GridItem, Box, Flex } from '@chakra-ui/react';
-import {
-  Stack,
-  Heading,
-  Text,
-  Input,
-  Button,
-  Icon,
-  useColorModeValue,
-  createIcon,
-} from '@chakra-ui/react';
+import { Box, Flex, Container } from '@chakra-ui/react';
+import { Stack, Input, Button, useColorModeValue } from '@chakra-ui/react';
 import ReactPlayer from 'react-player';
-import React from 'react';
-import { Link, useParams } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { CategoriesContext } from '../contexts/categories.context';
+import { useParams } from 'react-router-dom';
 
-const WatchVideo = ({ id, title }) => {
-  const { videoUrl } = useParams();
-  console.log(videoUrl);
+const WatchVideo = () => {
+  const { id } = useParams();
+  const { categoriesMap } = useContext(CategoriesContext);
+  const [videos, setVideos] = useState(categoriesMap);
+  const [commentText, setCommentText] = useState('');
+  let request = [];
+
+  useEffect(() => {
+    setVideos(categoriesMap);
+  }, [categoriesMap]);
+
+  const handleSubmit = evt => {
+    request[0].comments.push(commentText);
+    setCommentText('');
+  };
+  if (videos.length > 0) {
+    request = videos
+      .map(data => {
+        return data.videos.filter(video => video.id === parseInt(id));
+      })
+      .flat();
+
+    console.log('REQUEST', request[0].url);
+  }
+
   return (
     <Flex mx="6" justifyContent="space-between">
       <Box ml={{ base: 0, md: 4 }} p="4">
         <ReactPlayer
-          url="https://www.youtube.com/watch?v=zMFb8Y2QLPc"
+          url={`${request[0].url}`}
           controls={true}
           width={800}
           height={600}
@@ -57,6 +71,7 @@ const WatchVideo = ({ id, title }) => {
             >
               <Input
                 type={'text'}
+                value={commentText}
                 placeholder={'comment'}
                 color={useColorModeValue('gray.800', 'gray.200')}
                 bg={useColorModeValue('gray.100', 'gray.600')}
@@ -65,6 +80,7 @@ const WatchVideo = ({ id, title }) => {
                   bg: useColorModeValue('gray.200', 'gray.800'),
                   outline: 'none',
                 }}
+                onChange={e => setCommentText(e.target.value)}
               />
               <Button
                 bg={'blue.400'}
@@ -73,12 +89,24 @@ const WatchVideo = ({ id, title }) => {
                 flex={'1 0 auto'}
                 _hover={{ bg: 'blue.500' }}
                 _focus={{ bg: 'blue.500' }}
+                onClick={handleSubmit}
               >
-                Comment
+                comment
               </Button>
             </Stack>
             {/* <Icon as={NotificationIcon} w={24} h={24} /> */}
-            <Stack align={'center'} spacing={2}></Stack>
+            <Stack align={'left'} spacing={2} w="full">
+              {request[0].comments.map(comment => (
+                <Container
+                  rounded={'full'}
+                  maxW="md"
+                  bg="blue.600"
+                  color="white"
+                >
+                  {comment}
+                </Container>
+              ))}
+            </Stack>
           </Stack>
         </Flex>
       </Box>
