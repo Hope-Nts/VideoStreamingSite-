@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from 'react';
-import { SPORT_DATA } from '../shop-data';
+import { SPORT_DATA } from '../video-data';
 
 import {
   getCategoriesAndDocuments,

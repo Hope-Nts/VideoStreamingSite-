@@ -20,7 +20,7 @@ function App() {
       try {
         const userDetails = await getUserAccount(currentUser.uid);
 
-        if (userDetails.blocked && loggedIn) {
+        if (!userDetails.blocked && loggedIn) {
           loggedIn = false;
           alert('Your Account has been blocked');
           signOutUser();
@@ -28,7 +28,7 @@ function App() {
 
         if (
           userDetails.userType === 'Broadcaster' &&
-          userDetails.verfied &&
+          !userDetails.verfied &&
           loggedIn
         ) {
           loggedIn = false;

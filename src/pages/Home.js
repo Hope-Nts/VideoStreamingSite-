@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import VideoGrid from '../components/videogrid/videogrid.component';
 import { CategoriesContext } from '../contexts/categories.context';
 
-import { SPORT_DATA } from '../shop-data';
+import { SPORT_DATA } from '../video-data';
 const Home = () => {
   const { categoriesMap } = useContext(CategoriesContext);
 
